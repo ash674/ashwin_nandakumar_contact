@@ -1,6 +1,6 @@
 <?php 
-
-header('Access-Control-Allow-Origin: *');
+ini_set('display_errors', 1);
+header('Access-Control-Allow-Origin:*');
 header('Content-Type: application/json; charset=UTF-8');
 
 $results = [];
@@ -9,6 +9,12 @@ $user_email = '';
 $user_comment = '';
 
 $results = $_POST;
+require_once('recaptchalib.php');
+$privatekey = "AIzaSyDL80iQWGb5MwbWUjh6IZ99rtn9NLLo0ns";
+$resp = recaptcha_check_answer ($privatekey,
+                              $_SERVER["REMOTE_ADDR"],
+                              $_POST["recaptcha_challenge_field"],
+                              $_POST["recaptcha_response_field"]);
 
 if(isset($_POST['firstname'])) {
     $user_name = filter_var($_POST['firstname'], FILTER_SANITIZE_STRING);
@@ -24,8 +30,15 @@ if(isset($_POST['email'])) {
 }
 
 if(isset($_POST['comment'])) {
-    $user_comment = filter_var(htmlspecialcharacters($_POST['comment']), FILTER_SANITIZE_STRING);
+    $user_comment = filter_var(htmlspecialchars($_POST['comment']), FILTER_SANITIZE_STRING);
 }
+if (!$resp->is_valid) {
+    // What happens when the CAPTCHA was entered incorrectly
+    sprint ("The reCAPTCHA wasn't entered correctly. Go back and try it again." .
+         "(reCAPTCHA said: " . $resp->error . ")");
+  } else {
+      sprint ("Succesfully submitted");
+  }
 
 $results['name'] = $user_name;
 $results['comment'] = $user_comment;
@@ -33,20 +46,20 @@ $results['comment'] = $user_comment;
 // Email preparation
 $email_subj = 'Contact Form';
 $email_recipient = 'ashwinakx12@gmail.com';
-$email_msg = sprintf('Name: %s, Email: %s, Message:');
+$email_msg = sprintf('Name: %s, Email: %s, Message: %s', $user_name, $user_email, $user_comment);
 
 $email_headers = array(
 
 'From' =>$user_email
 
-)
+);
 
 $email_status = mail($email_recipient, $email_subj, $email_msg, $email_headers);
 if($email_status){
-    $results['comment'] = sprint('Thank you for contacting ashwin. you will recieve an automated reply', $user_name);
+    $results['comment'] = sprintf('Thank you for contacting ashwin. you will recieve an automated reply', $user_name);
 }
 
 else {
-    $results['comment'] = sprint('Something did not work right. Your email didnt work');
+    $results['comment'] = sprintf('Something did not work right. Your email didnt work');
 }
 echo json_encode($results);
