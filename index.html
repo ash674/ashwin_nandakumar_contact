@@ -3,31 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/master.css">
     <title>Contact Form</title>
 </head>
 <body>
-    <section class="contactPage fadeIn">
+    <section class="contactPage">
         <h2 class="hidden">Contact Form</h2>
 <section class="contactBox">
     <h2 class="hidden">Contact Box</h2>
       <form action="./includes/mail/send.php" id="contactForm" method="post">
             <h2 class="hidden">Contact form</h2>
                 <label for="name">Name: (required)</label><br>
+                <select name="names" id="names">
+                    <option value="Sam">Sam</option>
+                    <option value="Michael">Michael</option>
+                    <option value="william">William</option>
+            </select>
                 <input type="text" required id="name" name="firstname" size="30" placeholder="Enter your First name"><br>
-
-                <label for="name">Name: (required)</label><br>
-                <input type="text" required id="name" name="lastname" size="30" placeholder="Enter your last name"><br>
+                <label for="name">Last name: (required)</label><br>
                 
+                <input type="text" required id="name" name="lastname" size="30" placeholder="Enter your last name"><br>
                 <label for="email">E-mail: (will not be published)</label><br>
+                <select name="email" id="emailOptions">
+                    <option value="xxx@gmail.com">xxx@gmail.com</option>
+                    <option value="xxx123@gmail.com">xxx123@gmail.com</option>
+                    <option value="xxx@yahoo.com">xxx@yahoo.com</option>
+            </select>
+               
                 <input type="email" required id="email" name="email" size="30" placeholder="Enter your Email"><br>
                 
               
                 <label for="comments">Comments:</label><br>
                 <textarea name="comment" id="comments" required cols="50" rows="8"></textarea><br><br>
                 
-                <?php require_once('recaptchalib.php');
-                $publickey = "AIzaSyDL80iQWGb5MwbWUjh6IZ99rtn9NLLo0ns";
+                <?php require_once('./includes/recaptchalib.php');
+                $publickey = "6Lfn5_IZAAAAAMfQ4vIoybo9urkJlJXO9phbpNMV";
                 echo recaptcha_get_html($publickey);
                 ?>
                 
