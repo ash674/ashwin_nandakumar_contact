@@ -36,17 +36,18 @@
                 <label for="comments">Comments:</label><br>
                 <textarea name="comment" id="comments" required cols="50" rows="8"></textarea><br><br>
                 
-                <?php require_once('./includes/recaptchalib.php');
+                <!-- <?php require_once('./includes/recaptchalib.php');
                 $publickey = "6Lfn5_IZAAAAAMfQ4vIoybo9urkJlJXO9phbpNMV";
                 echo recaptcha_get_html($publickey);
-                ?>
+                ?> Php gets commented out in html source tab-->
                 
-            
-                
-                <button type="Submit" id="send-message" >Submit</button>
-         
+                <div class="g-recaptcha" data-sitekey="6Lfn5_IZAAAAAMfQ4vIoybo9urkJlJXO9phbpNMV"></div>
+                <button class="submitContainer">
+                    <span class="submit">Submit</span>
+                    <i class="fas fa-paper-plane"></i>
+                </button>
         </form>
         </section>
-        <script src="js/main.js"></script>
+        <script src="js/main.js" type="module"></script>
 </body>
 </html>
