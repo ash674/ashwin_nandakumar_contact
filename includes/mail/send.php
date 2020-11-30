@@ -1,5 +1,4 @@
 <?php 
-ini_set('display_errors', 1);
 header('Access-Control-Allow-Origin:*');
 header('Content-Type: application/json; charset=UTF-8');
 
@@ -9,8 +8,8 @@ $user_email = '';
 $user_comment = '';
 
 $results = $_POST;
-require_once('recaptchalib.php');
-$privatekey = "AIzaSyDL80iQWGb5MwbWUjh6IZ99rtn9NLLo0ns";
+require_once('../includes/recaptchalib.php');
+$privatekey = "6Lfn5_IZAAAAAPSLzAD7sk8oWfU4uglXCSWjUOYq";
 $resp = recaptcha_check_answer ($privatekey,
                               $_SERVER["REMOTE_ADDR"],
                               $_POST["recaptcha_challenge_field"],
